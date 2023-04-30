@@ -29,3 +29,44 @@ document.addEventListener('keydown', function (event) {
     closeModal();
   }
 });
+
+////////////////////////////// LECTURES //////////////////////////////
+
+// Selecting elements
+console.log(document.documentElement);
+console.log(document.head);
+console.log(document.body);
+
+const header = document.querySelector('.header');
+const allSections = document.querySelectorAll('.section'); //Retrives a NodeList, which is NOT updated live
+console.log(allSections);
+
+document.getElementById('section--1');
+const allButtons = document.getElementsByTagName('button'); //Retrieves an HTMLCollection, which is updated live
+console.log(allButtons);
+
+const allBtns = document.getElementsByClassName('btn');
+console.log(allBtns);
+
+// Creating and inserting elements
+// .insertAdjacentHTML
+
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+message.innerHTML = `We use biscuits for improvements functionality and analytics.
+  <button class="btn btn--close-cookie">Got it!</button>`;
+
+// header.prepend(message);
+header.append(message);
+// header.append(message.cloneNode(true));
+
+// header.before(message);
+// header.after(message);
+
+//Delete elements
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    message.remove();
+    // message.parentElement.removeChild(message);
+  });
