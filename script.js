@@ -70,3 +70,45 @@ document
     message.remove();
     // message.parentElement.removeChild(message);
   });
+
+//Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+console.log(message.style.height);
+console.log(message.style.backgroundColor); //Only works for styles we defined
+
+console.log(getComputedStyle(message).height);
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+document.documentElement.style.setProperty('--color-primary', 'peru');
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.className);
+logo.alt = 'Beatiful minimalist logo';
+
+console.log(logo.designer); //Doesn't work
+console.log(logo.getAttribute('designer')); //Works!
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src);
+console.log(logo.getAttribute('src'));
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+//Data attributes
+console.log(logo.dataset.versionRenzo);
+
+// Classes
+logo.classList.add('renzo-class');
+logo.classList.remove('renzo-class');
+logo.classList.toggle('renzo-class');
+console.log(logo.classList.contains('renzo-class'));
+
+logo.className = 'renzo'; //This override all existing classes only putting 1
