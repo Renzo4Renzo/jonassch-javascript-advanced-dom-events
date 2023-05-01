@@ -33,29 +33,34 @@ document.addEventListener('keydown', function (event) {
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
-btnScrollTo.addEventListener('click', function (event) {
-  const section1Coords = section1.getBoundingClientRect();
-  console.log(section1Coords);
-
-  // console.log(event.target.getBoundingClientRect());
-
-  // console.log('Current scroll (X/Y):', window.pageXOffset, window.pageYOffset);
-  // console.log(
-  //   'Width/Height viewport:',
-  //   document.documentElement.clientWidth,
-  //   document.documentElement.clientHeight
-  // );
-  // window.scrollTo(
-  //   section1Coords.left + window.pageXOffset,
-  //   section1Coords.top + window.pageYOffset
-  // );
+btnScrollTo.addEventListener('click', function () {
+  // const section1Coords = section1.getBoundingClientRect();
+  // console.log(section1Coords);
   // window.scrollTo({
   //   left: section1Coords.left + window.pageXOffset,
   //   top: section1Coords.top + window.pageYOffset,
   //   behavior: 'smooth',
   // });
-
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
 ////////////////////////////// LECTURES //////////////////////////////
+const titleh1 = document.querySelector('h1');
+
+//Old school way!
+// titleh1.onmouseenter = function (event) {
+//   console.log('onMouseEnter: Great! You are reading the heading :D');
+// };
+
+//New way!
+const consoleMessageh1 = function (event) {
+  console.log('addEventListener: Great! You are reading the heading :D');
+  // titleh1.removeEventListener('mouseenter', consoleMessageh1);
+};
+
+titleh1.addEventListener('mouseenter', consoleMessageh1);
+
+setTimeout(
+  () => titleh1.removeEventListener('mouseenter', consoleMessageh1),
+  4000
+);
