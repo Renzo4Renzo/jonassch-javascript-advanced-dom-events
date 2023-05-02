@@ -45,22 +45,34 @@ btnScrollTo.addEventListener('click', function () {
 });
 
 ////////////////////////////// LECTURES //////////////////////////////
-const titleh1 = document.querySelector('h1');
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+console.log(randomColor());
 
-//Old school way!
-// titleh1.onmouseenter = function (event) {
-//   console.log('onMouseEnter: Great! You are reading the heading :D');
-// };
+document
+  .querySelector('.nav__link')
+  .addEventListener('click', function (event) {
+    this.style.backgroundColor = randomColor();
+    console.log('LINK', event.target, event.currentTarget);
+    console.log(event.currentTarget === this);
 
-//New way!
-const consoleMessageh1 = function (event) {
-  console.log('addEventListener: Great! You are reading the heading :D');
-  // titleh1.removeEventListener('mouseenter', consoleMessageh1);
-};
+    // event.stopPropagation();
+  });
 
-titleh1.addEventListener('mouseenter', consoleMessageh1);
+document
+  .querySelector('.nav__links')
+  .addEventListener('click', function (event) {
+    this.style.backgroundColor = randomColor();
+    console.log('CONTAINER', event.target, event.currentTarget);
+  });
 
-setTimeout(
-  () => titleh1.removeEventListener('mouseenter', consoleMessageh1),
-  4000
+document.querySelector('.nav').addEventListener(
+  'click',
+  function (event) {
+    this.style.backgroundColor = randomColor();
+    console.log('NAV', event.target, event.currentTarget);
+  }
+  //, true
 );
