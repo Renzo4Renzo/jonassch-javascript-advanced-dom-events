@@ -33,6 +33,28 @@ document.addEventListener('keydown', function (event) {
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+//Page navigation
+// document.querySelectorAll('.nav__link').forEach(element => {
+//   element.addEventListener('click', function (event) {
+//     event.preventDefault();
+//     const navigationId = this.getAttribute('href');
+//     document.querySelector(navigationId).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+document
+  .querySelector('.nav__links')
+  .addEventListener('click', function (event) {
+    event.preventDefault();
+    if (event.target.classList.contains('nav__link')) {
+      const navigationId = event.target.getAttribute('href');
+      document
+        .querySelector(navigationId)
+        .scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+//Button scrolling
 btnScrollTo.addEventListener('click', function () {
   // const section1Coords = section1.getBoundingClientRect();
   // console.log(section1Coords);
@@ -45,34 +67,3 @@ btnScrollTo.addEventListener('click', function () {
 });
 
 ////////////////////////////// LECTURES //////////////////////////////
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
-const randomColor = () =>
-  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
-console.log(randomColor());
-
-document
-  .querySelector('.nav__link')
-  .addEventListener('click', function (event) {
-    this.style.backgroundColor = randomColor();
-    console.log('LINK', event.target, event.currentTarget);
-    console.log(event.currentTarget === this);
-
-    // event.stopPropagation();
-  });
-
-document
-  .querySelector('.nav__links')
-  .addEventListener('click', function (event) {
-    this.style.backgroundColor = randomColor();
-    console.log('CONTAINER', event.target, event.currentTarget);
-  });
-
-document.querySelector('.nav').addEventListener(
-  'click',
-  function (event) {
-    this.style.backgroundColor = randomColor();
-    console.log('NAV', event.target, event.currentTarget);
-  }
-  //, true
-);
