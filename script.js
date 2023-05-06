@@ -77,4 +77,24 @@ tabsContainer.addEventListener('click', function (event) {
     .querySelector(`.operations__content--${tabClicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+//Menu fade animation
+const handleMenuHover = function (event) {
+  if (event.target.classList.contains('nav__link')) {
+    const linkOver = event.target;
+    const linkSiblings = linkOver
+      .closest('.nav')
+      .querySelectorAll('.nav__link');
+    const logo = linkOver.closest('.nav').querySelector('img');
+
+    linkSiblings.forEach(element => {
+      if (element !== linkOver) element.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+navBar.addEventListener('mouseover', handleMenuHover.bind(0.5));
+navBar.addEventListener('mouseout', handleMenuHover.bind(1));
+
 ////////////////////////////// LECTURES //////////////////////////////
