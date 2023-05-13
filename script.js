@@ -98,7 +98,8 @@ const handleMenuHover = function (event) {
 navBar.addEventListener('mouseover', handleMenuHover.bind(0.5));
 navBar.addEventListener('mouseout', handleMenuHover.bind(1));
 
-const stickyNavigation = function (entries, observer) {
+//Sticky Navigation
+const stickyNavigation = function (entries) {
   const [entry] = entries;
   if (!entry.isIntersecting) navBar.classList.add('sticky');
   else navBar.classList.remove('sticky');
@@ -116,5 +117,30 @@ const headerObserver = new IntersectionObserver(
 );
 
 headerObserver.observe(headerElement);
+
+//Reveal Sections
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserverOptions = {
+  root: null,
+  threshold: 0.15,
+};
+
+const sectionObserver = new IntersectionObserver(
+  revealSection,
+  sectionObserverOptions
+);
+
+allSections.forEach(function (section) {
+  section.classList.add('section--hidden');
+  sectionObserver.observe(section);
+});
 
 ////////////////////////////// LECTURES //////////////////////////////
