@@ -8,6 +8,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const navBar = document.querySelector('.nav');
+const headerElement = document.querySelector('.header');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
@@ -96,5 +97,14 @@ const handleMenuHover = function (event) {
 
 navBar.addEventListener('mouseover', handleMenuHover.bind(0.5));
 navBar.addEventListener('mouseout', handleMenuHover.bind(1));
+
+//Sticky navigation
+const initialCoords = headerTitle.getBoundingClientRect();
+console.log(initialCoords);
+
+window.addEventListener('scroll', function () {
+  if (this.window.scrollY > initialCoords.top) navBar.classList.add('sticky');
+  else navBar.classList.remove('sticky');
+});
 
 ////////////////////////////// LECTURES //////////////////////////////
