@@ -98,13 +98,23 @@ const handleMenuHover = function (event) {
 navBar.addEventListener('mouseover', handleMenuHover.bind(0.5));
 navBar.addEventListener('mouseout', handleMenuHover.bind(1));
 
-//Sticky navigation
-const initialCoords = headerTitle.getBoundingClientRect();
-console.log(initialCoords);
-
-window.addEventListener('scroll', function () {
-  if (this.window.scrollY > initialCoords.top) navBar.classList.add('sticky');
+const stickyNavigation = function (entries, observer) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) navBar.classList.add('sticky');
   else navBar.classList.remove('sticky');
-});
+};
+
+const headerObserverOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${getComputedStyle(navBar).height}`, // nav.getBoundingClientRect().height;
+};
+
+const headerObserver = new IntersectionObserver(
+  stickyNavigation,
+  headerObserverOptions
+);
+
+headerObserver.observe(headerElement);
 
 ////////////////////////////// LECTURES //////////////////////////////
