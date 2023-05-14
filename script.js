@@ -8,10 +8,21 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const navBar = document.querySelector('.nav');
+const navLinks = document.querySelector('.nav__links');
 const headerElement = document.querySelector('.header');
+
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+
+const section1 = document.querySelector('#section--1');
+const allSections = document.querySelectorAll('.section');
+const imageTargets = document.querySelectorAll('img[data-src]');
+
+const slides = document.querySelectorAll('.slide');
+const btnLeftSlide = document.querySelector('.slider__btn--left');
+const btnRightSlide = document.querySelector('.slider__btn--right');
 
 // Modal window
 const openModal = function (event) {
@@ -36,20 +47,13 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-
-document
-  .querySelector('.nav__links')
-  .addEventListener('click', function (event) {
-    event.preventDefault();
-    if (event.target.classList.contains('nav__link')) {
-      const navigationId = event.target.getAttribute('href');
-      document
-        .querySelector(navigationId)
-        .scrollIntoView({ behavior: 'smooth' });
-    }
-  });
+navLinks.addEventListener('click', function (event) {
+  event.preventDefault();
+  if (event.target.classList.contains('nav__link')) {
+    const navigationId = event.target.getAttribute('href');
+    document.querySelector(navigationId).scrollIntoView({ behavior: 'smooth' });
+  }
+});
 
 //Button scrolling
 btnScrollTo.addEventListener('click', function () {
@@ -114,8 +118,6 @@ const headerObserver = new IntersectionObserver(stickyNavigation, {
 headerObserver.observe(headerElement);
 
 //Reveal Sections
-const allSections = document.querySelectorAll('.section');
-
 const revealSection = function (entries, observer) {
   const [entry] = entries;
   if (!entry.isIntersecting) return;
@@ -134,8 +136,6 @@ allSections.forEach(function (section) {
 });
 
 //Lazy loading images
-const imageTargets = document.querySelectorAll('img[data-src]');
-
 const loadImage = function (entries, observer) {
   const [entry] = entries;
   if (!entry.isIntersecting) return;
@@ -153,5 +153,32 @@ const imageObserver = new IntersectionObserver(loadImage, {
 });
 
 imageTargets.forEach(image => imageObserver.observe(image));
+
+//Slider
+let currentSlide = 0;
+const maxSlide = slides.length - 1;
+
+const goToSlide = function (currentSlide) {
+  slides.forEach(
+    (slide, index) =>
+      (slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`)
+  );
+};
+goToSlide(0);
+
+const nextSlide = function () {
+  if (currentSlide === maxSlide) currentSlide = 0;
+  else currentSlide++;
+  goToSlide(currentSlide);
+};
+
+const previousSlide = function () {
+  if (currentSlide === 0) currentSlide = maxSlide;
+  else currentSlide--;
+  goToSlide(currentSlide);
+};
+
+btnLeftSlide.addEventListener('click', previousSlide);
+btnRightSlide.addEventListener('click', nextSlide);
 
 ////////////////////////////// LECTURES //////////////////////////////
