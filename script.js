@@ -225,17 +225,3 @@ const slider = function () {
   });
 };
 slider();
-
-////////////////////////////// LECTURES //////////////////////////////
-document.addEventListener('DOMContentLoaded', function (event) {
-  console.log('HTML parsed and DOM tree built!', event);
-});
-
-window.addEventListener('load', function (event) {
-  console.log('Page fully loaded', event);
-});
-
-// window.addEventListener('beforeunload', function (event) {
-//   event.preventDefault();
-//   event.returnValue = ''; //Doesn't matter the value you put here, it won't appear!
-// });
