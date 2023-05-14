@@ -23,6 +23,7 @@ const imageTargets = document.querySelectorAll('img[data-src]');
 const slides = document.querySelectorAll('.slide');
 const btnLeftSlide = document.querySelector('.slider__btn--left');
 const btnRightSlide = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
 
 // Modal window
 const openModal = function (event) {
@@ -155,30 +156,74 @@ const imageObserver = new IntersectionObserver(loadImage, {
 imageTargets.forEach(image => imageObserver.observe(image));
 
 //Slider
-let currentSlide = 0;
-const maxSlide = slides.length - 1;
+const slider = function () {
+  //Functions
+  let currentSlide = 0;
+  const maxSlide = slides.length - 1;
 
-const goToSlide = function (currentSlide) {
-  slides.forEach(
-    (slide, index) =>
-      (slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`)
-  );
+  const createDots = function () {
+    slides.forEach(function (_, index) {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${index}"></button>`
+      );
+    });
+  };
+
+  const goToSlide = function (currentSlide) {
+    slides.forEach(
+      (slide, index) =>
+        (slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`)
+    );
+  };
+
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+
+  const previousSlide = function () {
+    if (currentSlide === 0) currentSlide = maxSlide;
+    else currentSlide--;
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  };
+
+  const nextSlide = function () {
+    if (currentSlide === maxSlide) currentSlide = 0;
+    else currentSlide++;
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  };
+
+  const initSlider = function () {
+    createDots();
+    goToSlide(0);
+    activateDot(0);
+  };
+  initSlider();
+
+  //Event Handlers
+  btnLeftSlide.addEventListener('click', previousSlide);
+  btnRightSlide.addEventListener('click', nextSlide);
+
+  document.addEventListener('keydown', function (event) {
+    event.key === 'ArrowLeft' && previousSlide();
+    event.key === 'ArrowRight' && nextSlide();
+  });
+
+  dotContainer.addEventListener('click', function (event) {
+    if (event.target.classList.contains('dots__dot')) {
+      const { slide } = event.target.dataset;
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
 };
-goToSlide(0);
-
-const nextSlide = function () {
-  if (currentSlide === maxSlide) currentSlide = 0;
-  else currentSlide++;
-  goToSlide(currentSlide);
-};
-
-const previousSlide = function () {
-  if (currentSlide === 0) currentSlide = maxSlide;
-  else currentSlide--;
-  goToSlide(currentSlide);
-};
-
-btnLeftSlide.addEventListener('click', previousSlide);
-btnRightSlide.addEventListener('click', nextSlide);
+slider();
 
 ////////////////////////////// LECTURES //////////////////////////////
